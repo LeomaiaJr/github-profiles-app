@@ -10,19 +10,21 @@ class DataHandler {
     User user = User();
     var data = this.userData;
     if (data["message"] != "Not Found") {
+      //If user exist
       NetworkHelper networkHelper = NetworkHelper();
+      //Get Repos Data
       var repos = await networkHelper.get(data["login"] + "/repos");
-      var repo = [];
+      var repo = []; //"index" of repos is stored here
       Map<int, Map<String, String>> topRepos = {};
       for (var i = 0; i < repos.length; i++) {
         repo.add(
           repos[i]["forks"] + repos[i]["stargazers_count"],
         );
       }
-      var r = [...repo];
+      var r = [...repo]; //List with the best to worse repos
       r.sort((b, a) => a.compareTo(b));
-      for (var i = 0; i < repo.length; i++) {
-        if (i == 4) {
+      for (var i = 0; i < repo.length; i++) { //.length thinking about a user with less than 4 repos
+        if (i == 4) { //Only the top 4 Repos
           break;
         } else {
           int index = repo.indexOf(r[i]);
@@ -34,7 +36,7 @@ class DataHandler {
             "stargazers_count": (repos[index]["stargazers_count"]).toString(),
             "forks_count": (repos[index]["forks_count"]).toString()
           };
-          repo[index] = "";
+          repo[index] = "";//"deletes" the element in the list that was already used
         }
       }
       user
@@ -46,6 +48,7 @@ class DataHandler {
         ..topRepos = topRepos;
       return user;
     } else {
+      //If user doesn't exist
       return user;
     }
   }
