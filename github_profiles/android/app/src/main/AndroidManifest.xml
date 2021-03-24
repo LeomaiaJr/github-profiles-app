@@ -2,7 +2,7 @@
     package="com.example.github_profiles">
    <application
         android:label="github_profiles"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
