@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class User {
   bool valid = false;
   String username;
@@ -8,7 +6,4 @@ class User {
   int reposCount;
   Map<int, Map<String, String>> topRepos = {};
 }
-// "top1": {"name": "",
-//     "description": "",
-//     "stargazers_count": "",
-//     "forks_count": "",}
+//Model containing all User data what will be used.
