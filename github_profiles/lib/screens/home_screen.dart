@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:github_profiles/utils/data_handler.dart';
+import 'package:github_profiles/utils/networking.dart';
 import 'package:github_profiles/widget/app_drawer.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:github_profiles/models/user.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -7,6 +11,24 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  TextEditingController controller = TextEditingController();
+  NetworkHelper networkHelper = NetworkHelper();
+
+  void getGitHubProfileData() async {
+    var res = await networkHelper.get(controller.text);
+    if (res != "") {
+      DataHandler dataHandler = DataHandler(res);
+      User profileUser = await dataHandler.getUserData();
+      if (!profileUser.valid) {
+        _onInvalidUserAlert(context);
+      } else {
+        print("tudo cerot");
+      }
+    } else {
+      _onErorAlert(context);
+    }
+  }
+
   String getImage(BuildContext context) {
     return Theme.of(context).brightness == Brightness.light
         ? "github-icon.png"
@@ -52,6 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
               child: TextField(
+                controller: controller,
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 15,
@@ -84,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       : Colors.teal,
                 ),
               ),
-              onPressed: () {},
+              onPressed: getGitHubProfileData,
               child: Text("Search"),
             )
           ],
@@ -92,4 +115,52 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
+
+_onErorAlert(BuildContext context) {
+  Alert(
+    context: context,
+    type: AlertType.error,
+    title: "ERRO!",
+    desc:
+        "Hmmm... We couldn't retrive the user information, please try again later",
+    buttons: [
+      DialogButton(
+        color: Theme.of(context).brightness == Brightness.light
+            ? Colors.blue
+            : Colors.teal,
+        child: Text(
+          "OK",
+          style: TextStyle(fontSize: 20),
+        ),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        width: 120,
+      )
+    ],
+  ).show();
+}
+
+_onInvalidUserAlert(BuildContext context) {
+  Alert(
+    context: context,
+    type: AlertType.error,
+    title: "User Not Found!",
+    buttons: [
+      DialogButton(
+        color: Theme.of(context).brightness == Brightness.light
+            ? Colors.blue
+            : Colors.teal,
+        child: Text(
+          "OK",
+          style: TextStyle(fontSize: 20),
+        ),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        width: 120,
+      )
+    ],
+  ).show();
 }
