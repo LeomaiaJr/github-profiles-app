@@ -124,61 +124,56 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           );
                         },
                         body: ListTile(
-                            title: Text(item.description),
-                            subtitle: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Chip(
-                                  backgroundColor: getColorFromTheme(context),
-                                  avatar: CircleAvatar(
-                                    backgroundColor:
-                                        Theme.of(context).primaryColor,
-                                    child: FaIcon(
-                                      FontAwesomeIcons.star,
-                                      color: Colors.white,
-                                      size: 20,
-                                    ),
-                                  ),
-                                  label: Text(
-                                    item.starCount + " stars",
-                                  ),
-                                  labelStyle: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w700,
-                                    color: Theme.of(context).primaryColor,
+                          title: Text(item.description),
+                          subtitle: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Chip(
+                                backgroundColor: getColorFromTheme(context),
+                                avatar: CircleAvatar(
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
+                                  child: FaIcon(
+                                    FontAwesomeIcons.star,
+                                    color: Colors.white,
+                                    size: 20,
                                   ),
                                 ),
-                                SizedBox(
-                                  width: width / 20,
+                                label: Text(
+                                  item.starCount + " stars",
                                 ),
-                                Chip(
-                                  backgroundColor: getColorFromTheme(context),
-                                  avatar: CircleAvatar(
-                                    backgroundColor:
-                                        Theme.of(context).primaryColor,
-                                    child: FaIcon(
-                                      FontAwesomeIcons.codeBranch,
-                                      color: Colors.white,
-                                      size: 20,
-                                    ),
-                                  ),
-                                  label: Text(
-                                    item.forksCount + " forks",
-                                  ),
-                                  labelStyle: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w700,
-                                    color: Theme.of(context).primaryColor,
+                                labelStyle: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w700,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              SizedBox(
+                                width: width / 20,
+                              ),
+                              Chip(
+                                backgroundColor: getColorFromTheme(context),
+                                avatar: CircleAvatar(
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
+                                  child: FaIcon(
+                                    FontAwesomeIcons.codeBranch,
+                                    color: Colors.white,
+                                    size: 20,
                                   ),
                                 ),
-                              ],
-                            ),
-                            onTap: () {
-                              setState(() {
-                                _data.removeWhere(
-                                    (Item currentItem) => item == currentItem);
-                              });
-                            }),
+                                label: Text(
+                                  item.forksCount + " forks",
+                                ),
+                                labelStyle: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w700,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                         isExpanded: item.isExpanded,
                       );
                     }).toList(),
