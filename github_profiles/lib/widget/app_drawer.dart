@@ -8,23 +8,40 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
+  DarkThemeProvider themeChangeProvider = new DarkThemeProvider();
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
     return Drawer(
-      child: Column(
-        children: [
-          SwitchListTile(
-            title: Text(
-              "Settings",
-              style: TextStyle(color: Theme.of(context).primaryColor),
+      child: DrawerHeader(
+        child: Column(
+          children: [
+            Text("GitHub Profiles"),
+            Divider(),
+            SizedBox(
+              height: 32,
+              child: Padding(
+                padding: EdgeInsets.only(left: 16, bottom: 8),
+                child: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Text(
+                    'Settings',
+                  ),
+                ),
+              ),
             ),
-            secondary:
-                Icon(Icons.settings, color: Theme.of(context).primaryColor),
-            value: themeChange.darkTheme,
-            onChanged: (bool value) => themeChange.darkTheme = value,
-          )
-        ],
+            SwitchListTile(
+              title: Text(
+                context.read<DarkThemeProvider>().darkTheme
+                    ? "Dark Theme"
+                    : "Light Theme",
+              ),
+              secondary: Icon(Icons.lightbulb),
+              value: themeChange.darkTheme,
+              onChanged: (bool value) => themeChange.darkTheme = value,
+            )
+          ],
+        ),
       ),
     );
   }

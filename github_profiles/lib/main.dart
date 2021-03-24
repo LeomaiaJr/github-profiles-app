@@ -3,7 +3,6 @@ import 'package:github_profiles/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'data/theme_control.dart';
-import 'data/theme_style.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,17 +17,6 @@ class _MyAppState extends State<MyApp> {
   DarkThemeProvider themeChangeProvider = new DarkThemeProvider();
 
   @override
-  void initState() {
-    super.initState();
-    getCurrentAppTheme();
-  }
-
-  void getCurrentAppTheme() async {
-    themeChangeProvider.darkTheme =
-        await themeChangeProvider.darkThemePreference.getTheme();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) {
@@ -38,7 +26,15 @@ class _MyAppState extends State<MyApp> {
         builder: (BuildContext context, value, Widget child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: Styles.themeData(themeChangeProvider.darkTheme, context),
+            theme: ThemeData(
+              brightness: Brightness.light,
+            ),
+            darkTheme: ThemeData(
+              brightness: Brightness.dark,
+            ),
+            themeMode: themeChangeProvider.darkTheme
+                ? ThemeMode.dark
+                : ThemeMode.light,
             home: HomeScreen(),
           );
         },

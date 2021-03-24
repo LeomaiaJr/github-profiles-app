@@ -8,15 +8,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String getImage(BuildContext context) {
-    return Theme.of(context).primaryColor == Colors.black
+    return Theme.of(context).brightness == Brightness.light
         ? "github-icon.png"
         : "github-icon-white.png";
   }
 
-  Color getInversedTheme() {
-    return Theme.of(context).primaryColor == Colors.black
-        ? Colors.white
-        : Colors.black;
+  Color getInversedColor(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.light
+        ? Colors.black
+        : Colors.white;
   }
 
   @override
@@ -25,9 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: getInversedTheme(),
       appBar: AppBar(
-        backgroundColor: getInversedTheme(),
         elevation: 0.0,
       ),
       drawer: AppDrawer(),
@@ -55,35 +53,36 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
               child: TextField(
                 style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 15,
-                    color: Theme.of(context).primaryColor),
-                cursorColor: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 15,
+                ),
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
+                      color: getInversedColor(context),
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
-                      color: Colors.red,
+                      color: getInversedColor(context),
                     ),
                   ),
-                  labelStyle: TextStyle(color: Colors.red),
                   labelText: "Username",
                   prefixIcon: Icon(
                     Icons.search,
-                    color: Colors.red,
                   ),
                 ),
               ),
             ),
             ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                backgroundColor: MaterialStateProperty.all<Color>(
+                  Theme.of(context).brightness == Brightness.light
+                      ? Colors.blue
+                      : Colors.teal,
+                ),
               ),
               onPressed: () {},
               child: Text("Search"),
