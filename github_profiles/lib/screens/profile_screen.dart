@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:github_profiles/models/user.dart';
 
 class ProfileScreen extends StatefulWidget {
-  final dynamic user;
+  final User user;
   ProfileScreen(this.user);
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -15,7 +15,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    _data = generateItems(4, widget.user);
+    _data = generateItems(widget.user.topRepos.keys.length, widget.user);
   }
 
   Color getColorFromTheme(BuildContext context) {
@@ -103,7 +103,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Padding(
               padding: EdgeInsets.only(bottom: 10, top: 20),
               child: Text(
-                "Top 4 Repositories:",
+                "Top ${widget.user.topRepos.keys.length} Repositories:",
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.w800),
               ),
             ),
